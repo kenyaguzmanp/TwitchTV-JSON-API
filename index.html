@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TwitchTV JSON API</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        <link href="newcss.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="container-fluid">
+
+            <div class="text-center">
+                <img id="logoBrand" src="http://s3.amazonaws.com/digitaltrends-uploads-prod/2013/09/Twitch-logo.jpg">
+            </div>
+            
+            <div class="col-md-4"></div>
+
+            <div class="col-xs-12 col-md-4 ">
+                
+                <div class="butGroup animated fadeIn">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button class="btn btn-default"  id="all">All</button>
+                        <button class="btn btn-default" id="connected">Connected</button>
+                        <button class="btn btn-default" id="disconnected" >Disconnected</button>
+                    </div>
+                </div> 
+
+
+                <div id="prin" class="principal notView">
+
+                    <div id="usCont">
+                        <div id="user">                       
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            
+            <div class="col-md-4"></div>
+
+
+
+        </div>
+        <footer>
+            <p class="text-center">Coded by <a href="https://www.freecodecamp.com/kenyaguzmanp" target="_blank" >Kenya Guzmán</a></p>
+        </footer>
+
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script>
+            //client_id=yx3faefu92ms9cnmm9s5i8xs42ey8g
+            //["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas", "brunofin"];
+            $(document).ready(function () {
+
+                var usersArray = ["brunofin", "ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas", "comster404"];
+
+
+                for (var i = 0; i < usersArray.length; i++) {
+
+
+
+                    $.ajax({
+                        type: 'GET',
+                        url: 'https://api.twitch.tv/kraken/channels/' + usersArray[i],
+                        headers: {
+                            'client-ID': 'yx3faefu92ms9cnmm9s5i8xs42ey8g'
+                        },
+                        success: function (dataI) {
+
+                            $.getJSON('https://api.twitch.tv/kraken/streams/' + dataI.name + '?client_id=yx3faefu92ms9cnmm9s5i8xs42ey8g').done(function (data2) {
+
+
+                                var name = data2._links.self.slice(37);
+                                var logo = dataI.logo;
+                                var statusComment = dataI.status.substring(0, 37);
+                                var channelUrl = dataI.url;
+                                var userStatus2 = data2.stream;
+                                if (userStatus2 === null) {
+
+                                    $("#user").append('<div class="userBlock disconnectedBlock"><div class="container-fluid" id="userLogo"><img class="userIcon" src="' + logo + '"></div><div class="container-fluid" id="userDescription"><a id="userName" target="blank" href="' + channelUrl + '">' + name + '  </a><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></div>');
+
+
+                                } else {
+                                    $("#user").append('<div class="userBlock connectedBlock"><div class="container-fluid" id="userLogo"><img class="userIcon" src="' + logo + '"></div><div class="container-fluid" id="userDescription"><a id="userName" target="blank" href="' + channelUrl + '">' + name + '  </a><i class="fa fa-check" aria-hidden="true"></i><p>' + statusComment  + '...' + '</p></div></div>');
+
+
+                                }
+
+                            }); //getJSON of data2: STREAMS                           
+
+
+                        },
+                        error: function (err) {
+
+//                            console.log(err);
+                            $("#user").append('<div class="userBlock notExistBlock"><div class="container-fluid" id="userLogo"><img class="userIcon" src="http://freevector.co/wp-content/uploads/2011/04/70206-forbidden-mark.png"></div><div class="container-fluid" id="userDescription"><a id="userName" target="blank" href="#">' + err.responseJSON.error + '</a><i class="fa fa-exclamation-triangle" aria-hidden="true""></i><p>' + err.responseJSON.message + '</p></div></div>');
+                        }
+
+                    });
+//                    
+
+                }// end of FOR
+
+                //Buttons
+                var flag = true;             
+                var lastClass;
+
+                $('button').on('click', function(){
+                    $('#prin').removeClass("notView");
+                    $('button').removeClass('selected');
+                    $(this).addClass('selected');
+                });
+
+                $("#all").on("click", function () {
+
+                    $(".disconnectedBlock").removeClass("notView");
+                    $(".connectedBlock").removeClass("notView");
+                    $(".notExistBlock").removeClass("notView");
+
+                    $('#usCont').removeClass(lastClass);
+                    $('#usCont').addClass("animated fadeInDown");
+
+
+
+                });
+
+                $("#connected").on("click", function () {
+
+
+                    lastClass = $('#usCont').attr('class').split(' ').pop();
+                    $('#usCont').removeClass(lastClass);
+                    $('#usCont').addClass("animated fadeInUp");
+
+
+                    $(".notExistBlock").addClass("notView");
+                    if (flag) {
+                        $(".disconnectedBlock").addClass("notView");
+
+                        flag = false;
+                    } else {
+                        $(".connectedBlock").removeClass("notView");
+                        $(".disconnectedBlock").addClass("notView");
+                    }
+
+
+                });
+
+                $("#disconnected").on("click", function () {
+
+
+                    lastClass = $('#usCont').attr('class').split(' ').pop();
+                    $('#usCont').removeClass(lastClass);
+                    $('#usCont').addClass("animated fadeInRight");
+
+                    $(".notExistBlock").addClass("notView");
+                    if (flag) {
+                        $(".connectedBlock").addClass("notView");
+
+                        flag = false;
+                    } else {
+                        $(".disconnectedBlock").removeClass("notView");
+                        $(".connectedBlock").addClass("notView");
+                    }
+
+
+
+                });
+
+
+
+            }); // end of DOCUMENT READY
+
+        </script>
+
+    </body>
+</html>

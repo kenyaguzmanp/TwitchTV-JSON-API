@@ -1,0 +1,183 @@
+body{
+    color: black;
+    background-color: black;
+
+}
+
+#user{
+    padding: 20px;
+    background-color: white;
+    border-style: solid;
+    border-width: 30px;
+    border-color: #201f1f;
+}
+
+.userBlock{
+    padding-bottom: 20px;
+}
+
+#userLogo{
+    display: inline-block;
+}
+
+.userIcon{
+    border-radius:100%; 
+    width: 60px;
+}
+
+#userDescription{
+    display: inline-block;
+}
+
+.view{
+    display: block;
+}
+
+.notView{
+    display: none;
+}
+
+.btn{
+    padding: 6px 18px;
+    border-radius: 0px;
+
+}
+
+.btn-default{
+    margin: 20px;
+    background-color: black;
+    color: white;
+    border-width: 4px;
+    border-color: white;
+
+}
+
+
+.principal{
+    /*    border-style: solid;
+        border-color: white;
+        padding-right: 0px;
+        padding-left: 0px;*/
+    /*    width: 40%;*/
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+#logoBrand{
+    width: 50%;
+}
+
+.butGroup{
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 30px;
+    /*    width: 50%;*/
+    /*    padding-left: 124px;*/
+}
+
+button.btn.btn-default:focus{
+    -webkit-box-shadow: 5px -3px 76px 25px rgba(74,48,119,1);
+    -moz-box-shadow: 5px -3px 76px 25px rgba(74,48,119,1);
+    box-shadow: 5px -3px 76px 25px rgba(74,48,119,1);
+    border-color: white;
+    background-color: white;
+    font-weight: bold;
+}
+
+button.btn.btn-default:hover{
+    -webkit-box-shadow: 5px -3px 76px 25px rgba(74,48,119,1);
+    -moz-box-shadow: 5px -3px 76px 25px rgba(74,48,119,1);
+    box-shadow: 5px -3px 76px 25px rgba(74,48,119,1);
+    border-color: white;
+    background-color: white;
+    font-weight: bold;
+}
+
+.selected{
+    -webkit-box-shadow: 5px -3px 76px 25px rgba(74,48,119,1);
+    -moz-box-shadow: 5px -3px 76px 25px rgba(74,48,119,1);
+    box-shadow: 5px -3px 76px 25px rgba(74,48,119,1);
+    border-color: white;
+    background-color: white;
+    font-weight: bold;
+    color: black;
+}
+
+#usCont{
+    border-style: solid;
+    border-width: 4px;
+    border-color: white;
+}
+
+footer{
+    margin-top: 20px;
+    color: white;
+}
+
+footer a{
+    color: #a88ae1;
+}
+
+footer a:hover{
+    -webkit-box-shadow: 6px 43px 31px -17px rgba(105,37,168,1);
+    -moz-box-shadow: 6px 43px 31px -17px rgba(105,37,168,1);
+    box-shadow: 6px 43px 31px -17px rgba(105,37,168,1);
+}
+
+.userBlock>.container-fluid{
+    padding: 5px;
+}
+
+.userBlock.connectedBlock p, .userBlock.notExistBlock p{
+    font-size: x-small;
+}
+
+
+
+/* animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -5%, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.fadeInDown {
+    animation-name: fadeInDown;
+}
+
+
+
+@media (max-width: 1024px) {
+    .btn{
+        padding: 6px 6px;
+        border-radius: 0px;
+
+    }
+    .btn-default{
+        margin: 10px;
+        background-color: black;
+        color: white;
+        border-width: 4px;
+        border-color: white;
+
+    }
+
+    .userIcon{        
+        width: 30px;
+    }
+    
+    #user{
+    padding: 10px;
+    border-width: 10px;    
+    }
+        
+    
+
+}
